@@ -20,5 +20,6 @@
   "dependencies": {
     "@types/node": "^18.11.18",
     "chalk": "^5.2.0"
-  }
+  },
+  "files": ["dist/"]
 }
