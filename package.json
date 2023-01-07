@@ -1,0 +1,12 @@
+{
+  "name": "mime-logger",
+  "version": "1.0.0",
+  "description": "A logger for me",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mime",
+  "license": "MIT"
+}
