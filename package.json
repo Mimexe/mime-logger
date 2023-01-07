@@ -2,11 +2,23 @@
   "name": "mime-logger",
   "version": "1.0.0",
   "description": "A logger for me",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "npm run build",
+    "build": "npm run clean && tsc",
+    "clean": "rimraf dist"
   },
   "keywords": [],
+  "type": "module",
   "author": "Mime",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@types/node": "^18.11.18",
+    "chalk": "^5.2.0"
+  }
 }
