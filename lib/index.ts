@@ -2,8 +2,8 @@ import chalk from "chalk";
 import * as fs from "fs";
 
 class MimeLogger {
-  name: string;
-  constructor(name: string) {
+  name?: string;
+  constructor(name?: string) {
     this.name = name;
   }
 
@@ -32,6 +32,9 @@ class MimeLogger {
   }
 
   child(name: string): MimeLogger {
+    if (this.name == null) {
+      throw new Error("You need a name for the parent");
+    }
     return new MimeLogger(this.name + "/" + name);
   }
 
@@ -55,15 +58,15 @@ class MimeLogger {
     if (levelString == null) {
       throw new Error("Cannot get level string");
     }
-    return `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString} ${chalk.yellow(
-      `(${this.name})`
-    )}: ${chalk.cyan(obj.message)}`;
+    return `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString}${
+      this.name ? chalk.yellow(` (${this.name})`) : ""
+    }: ${chalk.cyan(obj.message)}`;
   }
 }
 
 interface FormatObject {
   message: string;
-  name: string;
+  name?: string;
   timestamp: Date;
   level: LogLevel;
 }

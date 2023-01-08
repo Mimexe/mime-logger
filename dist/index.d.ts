@@ -1,6 +1,6 @@
 declare class MimeLogger {
-    name: string;
-    constructor(name: string);
+    name?: string;
+    constructor(name?: string);
     log(level: LogLevel | undefined, message: string): void;
     info(message: string): void;
     warn(message: string): void;
@@ -10,7 +10,7 @@ declare class MimeLogger {
 }
 interface FormatObject {
     message: string;
-    name: string;
+    name?: string;
     timestamp: Date;
     level: LogLevel;
 }

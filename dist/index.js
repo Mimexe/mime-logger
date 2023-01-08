@@ -23,6 +23,9 @@ class MimeLogger {
         this.log(LogLevel.ERROR, message);
     }
     child(name) {
+        if (this.name == null) {
+            throw new Error("You need a name for the parent");
+        }
         return new MimeLogger(this.name + "/" + name);
     }
     format(obj) {
@@ -44,7 +47,7 @@ class MimeLogger {
         if (levelString == null) {
             throw new Error("Cannot get level string");
         }
-        return `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString} ${chalk.yellow(`(${this.name})`)}: ${chalk.cyan(obj.message)}`;
+        return `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString}${this.name ? chalk.yellow(` (${this.name})`) : ""}: ${chalk.cyan(obj.message)}`;
     }
 }
 var LogLevel;
