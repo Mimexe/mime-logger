@@ -1,6 +1,7 @@
 declare class MimeLogger {
     name?: string;
-    constructor(name?: string);
+    options?: MimeLoggerOptions;
+    constructor(name?: string, opts?: MimeLoggerOptions);
     log(level: LogLevel | undefined, message: string): void;
     info(message: string): void;
     warn(message: string): void;
@@ -14,14 +15,13 @@ interface FormatObject {
     timestamp: Date;
     level: LogLevel;
 }
+interface MimeLoggerOptions {
+    warnings: boolean;
+}
 declare enum LogLevel {
     INFO = 0,
     WARN = 1,
     ERROR = 2
 }
-export { MimeLogger, LogLevel, FormatObject };
-declare const _default: {
-    MimeLogger: typeof MimeLogger;
-    LogLevel: typeof LogLevel;
-};
-export default _default;
+export { MimeLogger, LogLevel };
+export default MimeLogger;

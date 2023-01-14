@@ -1,7 +1,11 @@
 import chalk from "chalk";
+const defaultOptions = {
+    warnings: true,
+};
 class MimeLogger {
-    constructor(name) {
+    constructor(name, opts) {
         this.name = name;
+        this.options = opts || defaultOptions;
     }
     log(level = LogLevel.INFO, message) {
         if (!message)
@@ -24,7 +28,13 @@ class MimeLogger {
     }
     child(name) {
         if (this.name == null) {
-            throw new Error("You need a name for the parent");
+            if (this.options?.warnings) {
+                process.emitWarning("this.name is null () will equals the child", {
+                    code: "MIME_LOGGER",
+                    detail: "There is no name on the parent logger () will be the child not the name\nSet 'warnings' to 'false' to disable this",
+                });
+            }
+            return new MimeLogger(name, this.options);
         }
         return new MimeLogger(this.name + "/" + name);
     }
@@ -57,4 +67,4 @@ var LogLevel;
     LogLevel[LogLevel["ERROR"] = 2] = "ERROR";
 })(LogLevel || (LogLevel = {}));
 export { MimeLogger, LogLevel };
-export default { MimeLogger, LogLevel };
+export default MimeLogger;
