@@ -8,7 +8,8 @@
     "prepublish": "npm run build",
     "build": "npm run test && npm run clean && tsc",
     "clean": "rimraf dist",
-    "test": "mocha"
+    "test": "mocha",
+    "gpublish": "npm run build && git add . && git commit -am build && git push"
   },
   "keywords": [],
   "type": "module",
