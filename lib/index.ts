@@ -63,6 +63,7 @@ class MimeLogger {
             `${thisPkg.version} -> ${pkg.version}`
           )}`
         );
+        console.log(`[mime-logger] Use "npm install Mimexe/mime-logger"`);
       } else {
         debug("not update available", semver.lte(thisPkg.version, pkg.version));
       }

@@ -26,6 +26,7 @@ class MimeLogger {
             if (semver.lte(thisPkg.version, pkg.version)) {
                 debug("update available", semver.lte(thisPkg.version, pkg.version));
                 console.log(`[mime-logger] Update available ! ${chalk.cyan(`${thisPkg.version} -> ${pkg.version}`)}`);
+                console.log(`[mime-logger] Use "npm install Mimexe/mime-logger"`);
             }
             else {
                 debug("not update available", semver.lte(thisPkg.version, pkg.version));
