@@ -2,6 +2,7 @@ declare class MimeLogger {
     name?: string;
     options?: MimeLoggerOptions;
     constructor(name?: string, opts?: MimeLoggerOptions);
+    private _checkUpdate;
     log(level: LogLevel | undefined, message: string): void;
     info(message: string): void;
     warn(message: string): void;
@@ -17,11 +18,12 @@ interface FormatObject {
 }
 interface MimeLoggerOptions {
     warnings: boolean;
+    update: boolean;
 }
 declare enum LogLevel {
-    INFO = 0,
-    WARN = 1,
-    ERROR = 2
+    INFO = "info",
+    WARN = "warn",
+    ERROR = "error"
 }
 export { MimeLogger, LogLevel };
 export default MimeLogger;

@@ -1,15 +1,44 @@
 import chalk from "chalk";
+import * as fs from "fs";
+import axios from "axios";
+import Debug from "debug";
+import semver from "semver";
+const debug = Debug("mime-logger");
 const defaultOptions = {
     warnings: true,
+    update: true,
 };
 class MimeLogger {
     constructor(name, opts) {
         this.name = name;
         this.options = opts || defaultOptions;
+        debug(`Logger with name ${this.name}, options`, this.options);
+        this._checkUpdate();
+    }
+    async _checkUpdate() {
+        const response = await axios.get("https://api.github.com/repos/Mimexe/mime-logger/contents/package.json");
+        const pkg = JSON.parse(Buffer.from(response.data.content, response.data.encoding).toString());
+        const thisPkg = JSON.parse(fs.readFileSync("./package.json").toString());
+        debug("this:", thisPkg.version);
+        debug("remote:", pkg.version);
+        if (!semver.eq(thisPkg.version, pkg.version)) {
+            debug("not equals", semver.eq(thisPkg.version, pkg.version));
+            if (semver.lte(thisPkg.version, pkg.version)) {
+                debug("update available", semver.lte(thisPkg.version, pkg.version));
+                console.log(`[mime-logger] Update available ! ${chalk.cyan(`${thisPkg.version} -> ${pkg.version}`)}`);
+            }
+            else {
+                debug("not update available", semver.lte(thisPkg.version, pkg.version));
+            }
+        }
+        else {
+            debug("equals", semver.eq(thisPkg.version, pkg.version));
+        }
     }
     log(level = LogLevel.INFO, message) {
         if (!message)
-            throw new TypeError("test");
+            return;
+        debug(`log ${level.toString()} with message ${message}`);
         console.log(this.format({
             message: message,
             level: level,
@@ -18,15 +47,19 @@ class MimeLogger {
         }));
     }
     info(message) {
+        debug(`log function info ${message}`);
         this.log(LogLevel.INFO, message);
     }
     warn(message) {
+        debug(`log function warn ${message}`);
         this.log(LogLevel.WARN, message);
     }
     error(message) {
+        debug(`log function error ${message}`);
         this.log(LogLevel.ERROR, message);
     }
     child(name) {
+        debug(`child name ${name}`);
         if (this.name == null) {
             if (this.options?.warnings) {
                 process.emitWarning("this.name is null () will equals the child", {
@@ -39,6 +72,7 @@ class MimeLogger {
         return new MimeLogger(this.name + "/" + name);
     }
     format(obj) {
+        debug(`format object`, obj);
         let levelString = null;
         switch (obj.level) {
             case LogLevel.INFO:
@@ -62,9 +96,9 @@ class MimeLogger {
 }
 var LogLevel;
 (function (LogLevel) {
-    LogLevel[LogLevel["INFO"] = 0] = "INFO";
-    LogLevel[LogLevel["WARN"] = 1] = "WARN";
-    LogLevel[LogLevel["ERROR"] = 2] = "ERROR";
+    LogLevel["INFO"] = "info";
+    LogLevel["WARN"] = "warn";
+    LogLevel["ERROR"] = "error";
 })(LogLevel || (LogLevel = {}));
 export { MimeLogger, LogLevel };
 export default MimeLogger;
