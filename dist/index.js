@@ -18,7 +18,7 @@ class MimeLogger {
     async _checkUpdate() {
         const response = await axios.get("https://api.github.com/repos/Mimexe/mime-logger/contents/package.json");
         const pkg = JSON.parse(Buffer.from(response.data.content, response.data.encoding).toString());
-        const thisPkg = JSON.parse(fs.readFileSync("./package.json").toString());
+        const thisPkg = JSON.parse(fs.readFileSync("./node_modules/mime-logger/package.json").toString());
         debug("this:", thisPkg.version);
         debug("remote:", pkg.version);
         if (!semver.eq(thisPkg.version, pkg.version)) {

@@ -47,7 +47,9 @@ class MimeLogger {
       author: string;
       type: "commonjs" | "module";
       license: string;
-    } = JSON.parse(fs.readFileSync("./package.json").toString());
+    } = JSON.parse(
+      fs.readFileSync("./node_modules/mime-logger/package.json").toString()
+    );
 
     debug("this:", thisPkg.version);
     debug("remote:", pkg.version);
