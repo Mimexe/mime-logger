@@ -16,7 +16,18 @@ class MimeLogger {
         this._checkUpdate();
     }
     async _checkUpdate() {
-        const response = await axios.get("https://api.github.com/repos/Mimexe/mime-logger/contents/package.json");
+        const response = await axios
+            .get("https://api.github.com/repos/Mimexe/mime-logger/contents/package.json")
+            .catch((err) => {
+            if (this.options?.warnings) {
+                process.emitWarning("Error occured while checking updates");
+            }
+            debug(`Error occured while checking updates: ` + err.message || err);
+            return null;
+        });
+        if (!response) {
+            return;
+        }
         const pkg = JSON.parse(Buffer.from(response.data.content, response.data.encoding).toString());
         const thisPkg = JSON.parse(fs.readFileSync("./node_modules/mime-logger/package.json").toString());
         debug("this:", thisPkg.version);
