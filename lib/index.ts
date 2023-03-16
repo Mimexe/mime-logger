@@ -20,9 +20,20 @@ class MimeLogger {
   }
 
   private async _checkUpdate() {
-    const response = await axios.get(
-      "https://api.github.com/repos/Mimexe/mime-logger/contents/package.json"
-    );
+    const response = await axios
+      .get(
+        "https://api.github.com/repos/Mimexe/mime-logger/contents/package.json"
+      )
+      .catch((err) => {
+        if (this.options?.warnings) {
+          process.emitWarning("Error occured while checking updates");
+        }
+        debug(`Error occured while checking updates: ` + err.message || err);
+        return null;
+      });
+    if (!response) {
+      return;
+    }
     const pkg: {
       name: string;
       version: string;
