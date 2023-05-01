@@ -2,7 +2,6 @@ declare class MimeLogger {
     name?: string;
     options?: MimeLoggerOptions;
     constructor(name?: string, opts?: MimeLoggerOptions);
-    private _checkUpdate;
     log(level: LogLevel | undefined, message: string): void;
     info(message: string): void;
     warn(message: string): void;

@@ -1,8 +1,5 @@
 import chalk from "chalk";
-import * as fs from "fs";
-import axios from "axios";
 import Debug from "debug";
-import semver from "semver";
 const debug = Debug("mime-logger");
 
 const defaultOptions = {
@@ -49,13 +46,6 @@ class MimeLogger {
   child(name: string): MimeLogger {
     debug(`child name ${name}`);
     if (this.name == null) {
-      if (this.options?.warnings) {
-        process.emitWarning("this.name is null () will equals the child", {
-          code: "MIME_LOGGER",
-          detail:
-            "There is no name on the parent logger () will be the child not the name\nSet 'warnings' to 'false' to disable this",
-        });
-      }
       return new MimeLogger(name, this.options);
     }
     return new MimeLogger(this.name + "/" + name);
