@@ -4,12 +4,24 @@ const debug = Debug("mime-logger");
 const defaultOptions = {
     warnings: true,
     update: true,
+    debug: false,
 };
 class MimeLogger {
     constructor(name, opts) {
         this.name = name;
         this.options = opts || defaultOptions;
+        this.options.debug = this.options.debug || false;
+        debug(`set developpement ${this.options.debug}`);
         debug(`Logger with name ${this.name}, options`, this.options);
+    }
+    setDeveloppement(enabled) {
+        debug(`set developpement ${enabled}`);
+        if (enabled) {
+            this.options.debug = true;
+        }
+        else {
+            this.options.debug = false;
+        }
     }
     log(level = LogLevel.INFO, message) {
         if (!message)
@@ -33,6 +45,16 @@ class MimeLogger {
     error(message) {
         debug(`log function error ${message}`);
         this.log(LogLevel.ERROR, message);
+    }
+    debug(message) {
+        debug(`log function debug ${message}`);
+        if (this.options.debug) {
+            debug(`debug enabled`);
+            this.log(LogLevel.INFO, message);
+        }
+        else {
+            debug(`debug not enabled`);
+        }
     }
     child(name) {
         debug(`child name ${name}`);
