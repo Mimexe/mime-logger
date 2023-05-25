@@ -87,6 +87,9 @@ class MimeLogger {
       case LogLevel.ERROR:
         levelString = chalk.red("ERROR");
         break;
+      case LogLevel.DEBUG:
+        levelString = chalk.gray("DEBUG");
+        break;
       default:
         levelString = chalk.bgRed("???");
         break;
@@ -95,7 +98,11 @@ class MimeLogger {
       throw new Error("Cannot get level string");
     }
     return `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString}${
-      this.name ? chalk.yellow(` (${this.name})`) : ""
+      this.name
+        ? chalk.yellow(
+            ` (${this.name}${obj.level == LogLevel.DEBUG ? "/DEBUG" : ""})`
+          )
+        : ""
     }: ${chalk.cyan(obj.message)}`;
   }
 }
