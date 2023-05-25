@@ -25,7 +25,8 @@ interface MimeLoggerOptions {
 declare enum LogLevel {
     INFO = "info",
     WARN = "warn",
-    ERROR = "error"
+    ERROR = "error",
+    DEBUG = "debug"
 }
 export { MimeLogger, LogLevel };
 export default MimeLogger;

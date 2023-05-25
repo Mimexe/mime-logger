@@ -58,7 +58,7 @@ class MimeLogger {
     debug(`log function debug ${message}`);
     if (this.options.debug) {
       debug(`debug enabled`);
-      this.log(LogLevel.INFO, message);
+      this.log(LogLevel.DEBUG, message);
     } else {
       debug(`debug not enabled`);
     }
@@ -117,6 +117,7 @@ enum LogLevel {
   INFO = "info",
   WARN = "warn",
   ERROR = "error",
+  DEBUG = "debug",
 }
 
 export { MimeLogger, LogLevel };

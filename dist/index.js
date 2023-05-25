@@ -50,7 +50,7 @@ class MimeLogger {
         debug(`log function debug ${message}`);
         if (this.options.debug) {
             debug(`debug enabled`);
-            this.log(LogLevel.INFO, message);
+            this.log(LogLevel.DEBUG, message);
         }
         else {
             debug(`debug not enabled`);
@@ -91,6 +91,7 @@ var LogLevel;
     LogLevel["INFO"] = "info";
     LogLevel["WARN"] = "warn";
     LogLevel["ERROR"] = "error";
+    LogLevel["DEBUG"] = "debug";
 })(LogLevel || (LogLevel = {}));
 export { MimeLogger, LogLevel };
 export default MimeLogger;
