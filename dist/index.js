@@ -23,7 +23,7 @@ class MimeLogger {
             this.options.debug = false;
         }
     }
-    log(level = LogLevel.INFO, message) {
+    log(level = LogLevel.INFO, message, args) {
         if (!message)
             return;
         debug(`log ${level.toString()} with message ${message}`);
@@ -32,25 +32,26 @@ class MimeLogger {
             level: level,
             name: this.name,
             timestamp: new Date(),
+            args,
         }));
     }
-    info(message) {
-        debug(`log function info ${message}`);
-        this.log(LogLevel.INFO, message);
+    info(message, ...args) {
+        debug(`log function info ${message} with args [${args.join(", ")}]`);
+        this.log(LogLevel.INFO, message, args);
     }
-    warn(message) {
-        debug(`log function warn ${message}`);
-        this.log(LogLevel.WARN, message);
+    warn(message, ...args) {
+        debug(`log function warn ${message} with args [${args.join(", ")}]`);
+        this.log(LogLevel.WARN, message, args);
     }
-    error(message) {
-        debug(`log function error ${message}`);
-        this.log(LogLevel.ERROR, message);
+    error(message, ...args) {
+        debug(`log function error ${message} with args [${args.join(", ")}]`);
+        this.log(LogLevel.ERROR, message, args);
     }
-    debug(message) {
-        debug(`log function debug ${message}`);
+    debug(message, ...args) {
+        debug(`log function debug ${message} with args [${args.join(", ")}]`);
         if (this.options.debug) {
             debug(`debug enabled`);
-            this.log(LogLevel.DEBUG, message);
+            this.log(LogLevel.DEBUG, message, args);
         }
         else {
             debug(`debug not enabled`);
@@ -86,9 +87,17 @@ class MimeLogger {
         if (levelString == null) {
             throw new Error("Cannot get level string");
         }
-        return `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString}${this.name
+        const message = `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString}${this.name
             ? chalk.yellow(` (${this.name}${obj.level == LogLevel.DEBUG ? "/DEBUG" : ""})`)
             : ""}: ${chalk.cyan(obj.message)}`;
+        // replace with %s and args
+        let messageFormatted = message;
+        console.log(obj.args);
+        for (const arg of obj.args) {
+            console.log(arg);
+            messageFormatted = messageFormatted.replace("%s", arg);
+        }
+        return messageFormatted;
     }
 }
 var LogLevel;

@@ -3,8 +3,6 @@ import Debug from "debug";
 const debug = Debug("mime-logger");
 
 const defaultOptions = {
-  warnings: true,
-  update: true,
   debug: false,
 };
 class MimeLogger {
@@ -27,7 +25,7 @@ class MimeLogger {
     }
   }
 
-  log(level: LogLevel = LogLevel.INFO, message: string): void {
+  log(level: LogLevel = LogLevel.INFO, message: string, args: any[]): void {
     if (!message) return;
     debug(`log ${level.toString()} with message ${message}`);
     console.log(
@@ -36,29 +34,30 @@ class MimeLogger {
         level: level,
         name: this.name,
         timestamp: new Date(),
+        args,
       })
     );
   }
 
-  info(message: string): void {
-    debug(`log function info ${message}`);
-    this.log(LogLevel.INFO, message);
+  info(message: string, ...args: any[]): void {
+    debug(`log function info ${message} with args [${args.join(", ")}]`);
+    this.log(LogLevel.INFO, message, args);
   }
 
-  warn(message: string): void {
-    debug(`log function warn ${message}`);
-    this.log(LogLevel.WARN, message);
+  warn(message: string, ...args: any[]): void {
+    debug(`log function warn ${message} with args [${args.join(", ")}]`);
+    this.log(LogLevel.WARN, message, args);
   }
 
-  error(message: string): void {
-    debug(`log function error ${message}`);
-    this.log(LogLevel.ERROR, message);
+  error(message: string, ...args: any[]): void {
+    debug(`log function error ${message} with args [${args.join(", ")}]`);
+    this.log(LogLevel.ERROR, message, args);
   }
-  debug(message: string): void {
-    debug(`log function debug ${message}`);
+  debug(message: string, ...args: any[]): void {
+    debug(`log function debug ${message} with args [${args.join(", ")}]`);
     if (this.options.debug) {
       debug(`debug enabled`);
-      this.log(LogLevel.DEBUG, message);
+      this.log(LogLevel.DEBUG, message, args);
     } else {
       debug(`debug not enabled`);
     }
@@ -97,13 +96,19 @@ class MimeLogger {
     if (levelString == null) {
       throw new Error("Cannot get level string");
     }
-    return `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString}${
+    const message = `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString}${
       this.name
         ? chalk.yellow(
             ` (${this.name}${obj.level == LogLevel.DEBUG ? "/DEBUG" : ""})`
           )
         : ""
     }: ${chalk.cyan(obj.message)}`;
+    let messageFormatted = message;
+
+    for (const arg of obj.args) {
+      messageFormatted = messageFormatted.replace("%s", arg);
+    }
+    return messageFormatted;
   }
 }
 
@@ -112,11 +117,10 @@ interface FormatObject {
   name?: string;
   timestamp: Date;
   level: LogLevel;
+  args: any[];
 }
 
 interface MimeLoggerOptions {
-  warnings: boolean;
-  update: boolean;
   debug?: boolean;
 }
 
