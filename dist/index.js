@@ -2,8 +2,6 @@ import chalk from "chalk";
 import Debug from "debug";
 const debug = Debug("mime-logger");
 const defaultOptions = {
-    warnings: true,
-    update: true,
     debug: false,
 };
 class MimeLogger {
@@ -90,11 +88,8 @@ class MimeLogger {
         const message = `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString}${this.name
             ? chalk.yellow(` (${this.name}${obj.level == LogLevel.DEBUG ? "/DEBUG" : ""})`)
             : ""}: ${chalk.cyan(obj.message)}`;
-        // replace with %s and args
         let messageFormatted = message;
-        console.log(obj.args);
         for (const arg of obj.args) {
-            console.log(arg);
             messageFormatted = messageFormatted.replace("%s", arg);
         }
         return messageFormatted;
