@@ -8,7 +8,7 @@
     "build": "pnpm clean && tsc",
     "clean": "rimraf dist",
     "test": "pnpm build && node dist/test.js",
-    "gpublish": "pnpm test && pnpm build && git add . && git commit -am build && git push"
+    "gpublish": "pnpm install && pnpm test && pnpm build && git add . && git commit -am build && git push"
   },
   "keywords": [],
   "type": "module",
