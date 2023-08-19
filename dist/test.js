@@ -83,7 +83,7 @@ await logger
         throw err;
     }
     else {
-        process.stdout.write("Error catched, test passed\n");
+        process.stdout.write("[Test] Error catched, test passed\n");
     }
 });
 seperator("Promises log | With %p");
