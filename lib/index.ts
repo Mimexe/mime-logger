@@ -12,12 +12,12 @@ class MimeLogger {
     this.name = name;
     this.options = opts || defaultOptions;
     this.options.debug = this.options.debug || false;
-    debug(`set developpement ${this.options.debug}`);
+    debug(`set development ${this.options.debug}`);
     debug(`Logger with name ${this.name}, options`, this.options);
   }
 
-  setDeveloppement(enabled: boolean) {
-    debug(`set developpement ${enabled}`);
+  setDevelopment(enabled: boolean) {
+    debug(`set development ${enabled}`);
     if (enabled) {
       this.options.debug = true;
     } else {
@@ -109,6 +109,69 @@ class MimeLogger {
       messageFormatted = messageFormatted.replace("%s", arg);
     }
     return messageFormatted;
+  }
+
+  write(message: string, ...args: any[]): void {
+    debug(`write message ${message} with args [${args.join(", ")}]`);
+    process.stdout.write(
+      this.format({
+        message: message,
+        level: LogLevel.INFO,
+        name: this.name,
+        timestamp: new Date(),
+        args,
+      })
+    );
+  }
+
+  async promisesWrite(
+    message: string,
+    level: LogLevel = LogLevel.INFO,
+    ...promises: Promise<any>[]
+  ): Promise<void> {
+    debug(`promises write message ${message} with promises`, promises);
+    const now = new Date();
+    let levelString = null;
+    switch (level) {
+      case LogLevel.INFO:
+        levelString = chalk.green("INFO");
+        break;
+      case LogLevel.WARN:
+        levelString = chalk.yellow("WARN");
+        break;
+      case LogLevel.ERROR:
+        levelString = chalk.red("ERROR");
+        break;
+      case LogLevel.DEBUG:
+        levelString = chalk.gray("DEBUG");
+        break;
+      default:
+        levelString = chalk.bgRed("???");
+        break;
+    }
+    if (levelString == null) {
+      throw new Error("Cannot get level string");
+    }
+    const start = `[${now.toLocaleTimeString()}.${now.getMilliseconds()}] ${levelString}${
+      this.name
+        ? chalk.yellow(
+            ` (${this.name}${level == LogLevel.DEBUG ? "/DEBUG" : ""})`
+          )
+        : ""
+    }: `;
+    process.stdout.write(start);
+    if (message.indexOf("%p") == -1) {
+      throw new Error("No %p in message");
+    }
+    const parts = message.split("%p");
+    let i = 0;
+    for (const part of parts) {
+      process.stdout.write(chalk.cyan(part));
+      if (i < promises.length) {
+        process.stdout.write(chalk.cyan(await promises[i]));
+      }
+      i++;
+    }
   }
 }
 

@@ -5,31 +5,33 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npm run clean && tsc",
+    "build": "pnpm clean && tsc",
     "clean": "rimraf dist",
-    "gpublish": "npm run build && git add . && git commit -am build && git push"
+    "test": "pnpm build && node dist/test.js",
+    "gpublish": "pnpm test && pnpm build && git add . && git commit -am build && git push"
   },
   "keywords": [],
   "type": "module",
   "author": "Mime",
   "license": "MIT",
   "devDependencies": {
-    "@types/debug": "^4.1.7",
+    "@types/debug": "^4.1.8",
     "@types/mocha": "^10.0.1",
-    "@types/semver": "^7.3.13",
+    "@types/semver": "^7.5.0",
     "mocha": "^10.2.0",
-    "rimraf": "^4.4.0",
+    "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.5"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@types/node": "^18.15.0",
-    "axios": "^1.3.4",
-    "chalk": "^5.2.0",
+    "@types/node": "^20.5.0",
+    "axios": "^1.4.0",
+    "chalk": "^5.3.0",
     "debug": "^4.3.4",
-    "semver": "^7.3.8"
+    "semver": "^7.5.4"
   },
   "files": [
-    "dist/"
+    "dist/index.js",
+    "dist/index.d.ts"
   ]
 }
