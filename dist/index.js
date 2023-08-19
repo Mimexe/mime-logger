@@ -144,6 +144,7 @@ class MimeLogger {
             }
             i++;
         }
+        process.stdout.write("\n");
     }
 }
 var LogLevel;
