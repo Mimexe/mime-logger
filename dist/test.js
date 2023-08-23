@@ -5,6 +5,9 @@ function seperator(text) {
 }
 async function pause() {
     return new Promise((resolve) => {
+        // if not interactive just resolve
+        if (!process.stdin.isTTY)
+            return resolve();
         process.stdin.once("data", () => {
             resolve();
             process.stdin.pause();
@@ -96,6 +99,8 @@ await logger.promisesWrite("Hello %p%p", LogLevel.INFO, new Promise((resolve) =>
         resolve("!");
     }, 4000);
 }));
+if (!process.stdin.isTTY)
+    process.exit(0);
 process.stdin.once("data", (d) => {
     process.stdin.pause();
     process.exit(d.toString().trim() == "y" ? 0 : 1);
