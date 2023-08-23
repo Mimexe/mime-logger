@@ -87,12 +87,18 @@ await logger
     }
 });
 seperator("Promises log | With %p");
-await logger.promisesWrite("Hello %p %p", LogLevel.INFO, new Promise((resolve) => {
+await logger.promisesWrite("Hello %p%p", LogLevel.INFO, new Promise((resolve) => {
     setTimeout(() => {
         resolve("World");
     }, 3000);
 }), new Promise((resolve) => {
     setTimeout(() => {
-        resolve("World!");
+        resolve("!");
     }, 4000);
 }));
+process.stdin.once("data", (d) => {
+    process.stdin.pause();
+    process.exit(d.toString().trim() == "y" ? 0 : 1);
+});
+process.stdout.write("\nTesting successful ? (y/n) ");
+process.stdin.resume();
