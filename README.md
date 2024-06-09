@@ -1,4 +1,3 @@
-
 ![Logo](https://i.imgur.com/IYzEwxY.png)
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
@@ -7,6 +6,7 @@
 # Mime Logger
 
 A simple logger for Mime, used by all his projects.
+
 ## Installation
 
 Install mime-logger with your package manager of your choice.
@@ -14,12 +14,18 @@ Install mime-logger with your package manager of your choice.
 ```bash
   npm install Mimexe/mime-logger
 ```
+
 ```bash
   yarn add Mimexe/mime-logger
 ```
+
 ```bash
   pnpm install Mimexe/mime-logger
 ```
+
+## Documentation
+
+Online documentation can be found [here](https://docs.mimedev.fr/docs/category/mime-logger)
 
 ## Usage/Examples
 
@@ -40,12 +46,13 @@ logger.write("Hello %s", myVariable); // not recommended
 ### Childrens
 
 ```javascript
-const child = logger.child("API")
-child.info("New post with id '%s'", post.id)
-child.error("Database error %s", e.stack)
+const child = logger.child("API");
+child.info("New post with id '%s'", post.id);
+child.error("Database error %s", e.stack);
 ```
 
 ### Development mode
+
 ```javascript
 logger.setDevelopment(true);
 logger.debug("A debug log"); // This log
@@ -54,21 +61,32 @@ logger.debug("A debug log"); // This doesn't log
 ```
 
 ### Promises write
+
 Use promises write to write based on promises, when i promise resolve it writes the result.
 
 ```javascript
 import axios from "axios";
-logger.promisesWrite("Users count: %p - Posts: %p", new Promise((resolve) => {
-    axios.get("https://jsonplaceholder.typicode.com/users").then((res) => {
-        resolve(res.data)
-    }).catch((e) => e.message)
-}),new Promise((resolve) => {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
-        resolve(res.data)
-    }).catch((e) => e.message)
-}))
+logger.promisesWrite(
+  "Users count: %p - Posts: %p",
+  new Promise((resolve) => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((e) => e.message);
+  }),
+  new Promise((resolve) => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((e) => e.message);
+  })
+);
 ```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
