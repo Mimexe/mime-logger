@@ -17,17 +17,17 @@
     "@types/debug": "^4.1.12",
     "@types/mocha": "^10.0.6",
     "@types/semver": "^7.5.8",
-    "mocha": "^10.3.0",
-    "rimraf": "^5.0.5",
+    "mocha": "^10.4.0",
+    "rimraf": "^5.0.7",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@types/node": "^20.11.30",
-    "axios": "^1.6.8",
+    "@types/node": "^20.14.0",
+    "axios": "^1.7.2",
     "chalk": "^5.3.0",
-    "debug": "^4.3.4",
-    "semver": "^7.6.0"
+    "debug": "^4.3.5",
+    "semver": "^7.6.2"
   },
   "files": [
     "dist/index.js",
