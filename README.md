@@ -12,15 +12,15 @@ A simple logger for Mime, used by all his projects.
 Install mime-logger with your package manager of your choice.
 
 ```bash
-  npm install Mimexe/mime-logger
+  npm install mime-logger
 ```
 
 ```bash
-  yarn add Mimexe/mime-logger
+  yarn add mime-logger
 ```
 
 ```bash
-  pnpm install Mimexe/mime-logger
+  pnpm install mime-logger
 ```
 
 ## Documentation
