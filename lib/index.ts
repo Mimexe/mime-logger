@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import Debug from "debug";
+import { deprecate } from "util";
 const debug = Debug("mime-logger");
 
 const defaultOptions = {
@@ -53,7 +54,12 @@ class MimeLogger {
     debug(`log function error ${message} with args [${args.join(", ")}]`);
     this.log(LogLevel.ERROR, message, args);
   }
+
+  /**
+   * @deprecated Use debug package instead
+   */
   debug(message: string, ...args: any[]): void {
+    deprecate(this.debug, "Use debug package instead");
     debug(`log function debug ${message} with args [${args.join(", ")}]`);
     if (this.options.debug) {
       debug(`debug enabled`);
