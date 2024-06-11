@@ -17,7 +17,14 @@ class MimeLogger {
     debug(`Logger with name ${this.name}, options`, this.options);
   }
 
+  /**
+   * @deprecated Use debug package instead, this function will be removed in the future
+   */
   setDevelopment(enabled: boolean) {
+    deprecate(
+      this.setDevelopment,
+      "Use debug package instead, this function will be removed in the future"
+    );
     debug(`set development ${enabled}`);
     if (enabled) {
       this.options.debug = true;
@@ -56,10 +63,13 @@ class MimeLogger {
   }
 
   /**
-   * @deprecated Use debug package instead
+   * @deprecated Use debug package instead, this function will be removed in the future
    */
   debug(message: string, ...args: any[]): void {
-    deprecate(this.debug, "Use debug package instead");
+    deprecate(
+      this.debug,
+      "Use debug package instead, this function will be removed in the future"
+    );
     debug(`log function debug ${message} with args [${args.join(", ")}]`);
     if (this.options.debug) {
       debug(`debug enabled`);
