@@ -17,7 +17,6 @@ class MimeLogger {
      * @deprecated Use debug package instead, this function will be removed in the future
      */
     setDevelopment(enabled) {
-        deprecate(this.setDevelopment, "Use debug package instead, this function will be removed in the future");
         debug(`set development ${enabled}`);
         if (enabled) {
             this.options.debug = true;
@@ -54,7 +53,6 @@ class MimeLogger {
      * @deprecated Use debug package instead, this function will be removed in the future
      */
     debug(message, ...args) {
-        deprecate(this.debug, "Use debug package instead, this function will be removed in the future");
         debug(`log function debug ${message} with args [${args.join(", ")}]`);
         if (this.options.debug) {
             debug(`debug enabled`);
@@ -163,5 +161,7 @@ var LogLevel;
     LogLevel["ERROR"] = "error";
     LogLevel["DEBUG"] = "debug";
 })(LogLevel || (LogLevel = {}));
+MimeLogger.prototype.debug = deprecate(MimeLogger.prototype.debug, "Use debug package instead, this function will be removed in the future");
+MimeLogger.prototype.setDevelopment = deprecate(MimeLogger.prototype.setDevelopment, "Use debug package instead, this function will be removed in the future");
 export { MimeLogger, LogLevel };
 export default MimeLogger;
