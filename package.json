@@ -1,13 +1,14 @@
 {
   "name": "mime-logger",
-  "version": "1.6.9",
+  "version": "1.6.10",
   "description": "A simple logger for Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "pnpm clean && tsc",
     "clean": "rimraf dist",
-    "test": "pnpm build && node dist/test.js"
+    "test": "pnpm build && node dist/test.js",
+    "prepublish": "pnpm build"
   },
   "keywords": [],
   "type": "module",
