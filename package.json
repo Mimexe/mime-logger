@@ -1,6 +1,6 @@
 {
   "name": "mime-logger",
-  "version": "1.6.13",
+  "version": "1.6.14",
   "description": "A simple logger for Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,7 +19,11 @@
     "url": "git+https://github.com/Mimexe/mime-logger.git"
   },
   "homepage": "https://github.com/Mimexe/mime-logger#readme",
-  "keywords": ["cli", "logger", "mime4x"],
+  "keywords": [
+    "cli",
+    "logger",
+    "mime4x"
+  ],
   "type": "module",
   "author": "Mime <mime@mimedev.fr> (https://mimedev.fr)",
   "license": "MIT",
