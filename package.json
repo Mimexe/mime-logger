@@ -10,9 +10,18 @@
     "test": "pnpm build && node dist/test.js",
     "prepublish": "pnpm build"
   },
-  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Mimexe/mime-logger/issues",
+    "email": "mime+bugs@mimedev.fr"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mimexe/mime-logger.git"
+  },
+  "homepage": "https://github.com/Mimexe/mime-logger#readme",
+  "keywords": ["cli", "logger", "mime4x"],
   "type": "module",
-  "author": "Mime",
+  "author": "Mime <mime@mimedev.fr> (https://mimedev.fr)",
   "license": "MIT",
   "devDependencies": {
     "@types/debug": "^4.1.12",
