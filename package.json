@@ -1,15 +1,15 @@
 {
   "name": "mime-logger",
-  "version": "1.6.15",
+  "version": "1.6.16",
   "description": "A simple logger for Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-  "build": "pnpm clean && tsc",
-  "clean": "rimraf dist",
-  "test": "mocha --require ./register-loader.js --experimental-specifier-resolution=node tests/**/*.ts",
-  "prepublish": "pnpm build"
-},
+    "build": "pnpm clean && tsc",
+    "clean": "rimraf dist",
+    "test": "mocha --require ./register-loader.js --experimental-specifier-resolution=node tests/**/*.ts",
+    "prepublish": "pnpm build"
+  },
   "bugs": {
     "url": "https://github.com/Mimexe/mime-logger/issues",
     "email": "mime+bugs@mimedev.fr"
