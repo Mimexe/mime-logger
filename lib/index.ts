@@ -64,10 +64,10 @@ class MimeLogger {
   debug(message: string, ...args: any[]) {
     debug(`log function debug ${message} with args [${args.join(", ")}]`);
     if (this.options.debug) {
-      debug(`debug enabled`);
+      debug("debug enabled");
       this.log(LogLevel.DEBUG, message, args);
     } else {
-      debug(`debug not enabled`);
+      debug("debug not enabled");
     }
   }
 
@@ -80,7 +80,7 @@ class MimeLogger {
   }
 
   format(obj: FormatObject): string {
-    debug(`format object`, obj);
+    debug("format object", obj);
 
     let levelString = null;
 
