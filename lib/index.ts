@@ -39,7 +39,7 @@ class MimeLogger {
         name: this.name,
         timestamp: new Date(),
         args,
-      })
+      }),
     );
   }
 
@@ -64,10 +64,10 @@ class MimeLogger {
   debug(message: string, ...args: any[]) {
     debug(`log function debug ${message} with args [${args.join(", ")}]`);
     if (this.options.debug) {
-      debug(`debug enabled`);
+      debug("debug enabled");
       this.log(LogLevel.DEBUG, message, args);
     } else {
-      debug(`debug not enabled`);
+      debug("debug not enabled");
     }
   }
 
@@ -80,7 +80,7 @@ class MimeLogger {
   }
 
   format(obj: FormatObject): string {
-    debug(`format object`, obj);
+    debug("format object", obj);
 
     let levelString = null;
 
@@ -107,7 +107,7 @@ class MimeLogger {
     const message = `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}] ${levelString}${
       this.name
         ? chalk.yellow(
-            ` (${this.name}${obj.level == LogLevel.DEBUG ? "/DEBUG" : ""})`
+            ` (${this.name}${obj.level == LogLevel.DEBUG ? "/DEBUG" : ""})`,
           )
         : ""
     }: ${chalk.cyan(obj.message)}`;
@@ -128,7 +128,7 @@ class MimeLogger {
         name: this.name,
         timestamp: new Date(),
         args,
-      })
+      }),
     );
   }
 
@@ -163,7 +163,7 @@ class MimeLogger {
     const start = `[${now.toLocaleTimeString()}.${now.getMilliseconds()}] ${levelString}${
       this.name
         ? chalk.yellow(
-            ` (${this.name}${level == LogLevel.DEBUG ? "/DEBUG" : ""})`
+            ` (${this.name}${level == LogLevel.DEBUG ? "/DEBUG" : ""})`,
           )
         : ""
     }: `;
@@ -205,12 +205,12 @@ enum LogLevel {
 
 MimeLogger.prototype.debug = deprecate(
   MimeLogger.prototype.debug,
-  "Use debug package instead, this function will be removed in the future"
+  "Use debug package instead, this function will be removed in the future",
 );
 
 MimeLogger.prototype.setDevelopment = deprecate(
   MimeLogger.prototype.setDevelopment,
-  "Use debug package instead, this function will be removed in the future"
+  "Use debug package instead, this function will be removed in the future",
 );
 
 export { MimeLogger, LogLevel };
