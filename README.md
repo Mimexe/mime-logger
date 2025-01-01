@@ -27,7 +27,7 @@ Install mime-logger with your package manager of your choice.
 
 ## Documentation
 
-Online documentation can be found [here](https://docs.mimedev.fr/docs/category/mime-logger)
+Online documentation can be found [here](https://docs.mimedev.fr/docs/mime-logger/installation/)
 
 ## Simple usage
 
