@@ -1,6 +1,6 @@
 {
   "name": "mime-logger",
-  "version": "1.6.20",
+  "version": "1.7.0",
   "description": "A simple logger for Node.js",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
