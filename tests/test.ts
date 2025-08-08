@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import sinon from "sinon";
-import { MimeLogger, LogLevel } from "../lib/index";
+import * as sinon from "sinon";
+import { LogLevel, MimeLogger } from "../lib/index";
 
 describe("MimeLogger Tests", function () {
   this.timeout(10000); // Set timeout to 10 seconds for async tests
@@ -81,7 +81,7 @@ describe("MimeLogger Tests", function () {
         "Hello",
         LogLevel.INFO,
         Promise.resolve("World"),
-        Promise.resolve("!"),
+        Promise.resolve("!")
       );
     } catch (error: any) {
       expect(error.message).to.equal("No %p in message");
@@ -126,7 +126,7 @@ describe("MimeLogger Tests", function () {
     expect(emitWarningSpy.calledOnce).to.be.true;
     const warningArgs = emitWarningSpy.getCall(0).args;
     expect(warningArgs[0]).to.include(
-      "Use debug package instead, this function will be removed in the future",
+      "Use debug package instead, this function will be removed in the future"
     );
     expect(warningArgs[1]).to.equal("DeprecationWarning");
   });
