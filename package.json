@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "chalk": "5.5.0",
-    "debug": "4.3.4"
+    "debug": "4.4.3"
   },
   "files": [
     "dist/lib/index.js",
