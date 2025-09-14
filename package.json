@@ -42,8 +42,8 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "chalk": "^5.5.0",
-    "debug": "^4.4.1"
+    "chalk": "5.5.0",
+    "debug": "4.3.4"
   },
   "files": [
     "dist/lib/index.js",
