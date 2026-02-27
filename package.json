@@ -5,7 +5,7 @@
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
   "scripts": {
-    "build": "pnpm clean ; tsc",
+    "build": "pnpm clean && tsc",
     "clean": "rimraf dist",
     "test": "mocha --require ./register-loader.js --experimental-specifier-resolution=node tests/**/*.ts",
     "prepublish": "pnpm build"
