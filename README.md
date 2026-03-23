@@ -43,6 +43,72 @@ const logger = new MimeLogger();
 logger.info("Hello, world!");
 ```
 
+## Development & Publishing
+
+### Prerequisites
+
+This project uses [Bun](https://bun.sh/) as its package manager and build tool. Make sure you have Bun installed:
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+
+### Building the Project
+
+To build the project:
+
+```bash
+bun run build
+```
+
+This will:
+- Clean the `dist` directory
+- Compile TypeScript to JavaScript (ESM and CJS)
+- Generate type definitions
+
+### Running Tests
+
+```bash
+bun test
+```
+
+### Publishing to npm
+
+The project is configured to automatically build before publishing. To publish a new version:
+
+1. **Update the version** in `package.json`:
+   ```bash
+   # For patch releases (bug fixes)
+   npm version patch
+
+   # For minor releases (new features, backwards compatible)
+   npm version minor
+
+   # For major releases (breaking changes)
+   npm version major
+   ```
+
+2. **Publish to npm**:
+   ```bash
+   npm publish
+   ```
+
+   The `prepublishOnly` script will automatically run `bun run build` before publishing.
+
+3. **Push the version tag**:
+   ```bash
+   git push && git push --tags
+   ```
+
+### Publishing Checklist
+
+Before publishing, ensure:
+- [ ] All tests pass (`bun test`)
+- [ ] The build succeeds (`bun run build`)
+- [ ] GitHub Actions CI is passing
+- [ ] CHANGELOG.md is updated (if applicable)
+- [ ] Version number follows [semantic versioning](https://semver.org/)
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)

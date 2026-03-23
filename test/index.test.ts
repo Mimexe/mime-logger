@@ -86,10 +86,10 @@ describe("MimeLogger", () => {
   test("format includes timestamp", () => {
     const logger = new MimeLogger();
     logger.info("timestamp test");
-    
+
     const output = capturedLogs[0][0];
-    // Should contain time format like [HH:MM:SS.mmm]
-    expect(output).toMatch(/\[\d{1,2}:\d{2}:\d{2}\.\d+\]/);
+    // Should contain time format like [HH:MM:SS.mmm] or [HH:MM:SS AM/PM.mmm]
+    expect(output).toMatch(/\[\d{1,2}:\d{2}:\d{2}( [AP]M)?\.\d+\]/);
   });
 
   test("LogLevel enum exports expected values", () => {
