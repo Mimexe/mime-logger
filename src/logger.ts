@@ -1,15 +1,14 @@
 import chalk from "chalk";
-import { LogLevel, MimeLoggerOptions, FormatObject, defaultOptions } from "./types.js";
+import { LogLevel } from "./types.js";
 import { formatMessage, getLevelString } from "./formatter.js";
 
 export class MimeLogger {
   name?: string;
-  options: MimeLoggerOptions;
+  options: {}; // for now, we don't have any options, but this is here for future use
 
-  constructor(name?: string, opts?: MimeLoggerOptions) {
+  constructor(name?: string, opts?: {}) {
     this.name = name;
-    this.options = opts || defaultOptions;
-    this.options.debug = this.options.debug || false;
+    this.options = {};
   }
 
   log(level: LogLevel = LogLevel.INFO, message: string, args: any[]): void {
@@ -71,7 +70,7 @@ export class MimeLogger {
     const levelString = getLevelString(level);
 
     const nameSection = this.name
-      ? chalk.yellow(` (${this.name}${level === LogLevel.DEBUG ? "/DEBUG" : ""})`)
+      ? chalk.yellow(` (${this.name})`)
       : "";
 
     const start = `[${now.toLocaleTimeString()}.${now.getMilliseconds()}] ${levelString}${nameSection}: `;

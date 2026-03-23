@@ -9,8 +9,6 @@ export function getLevelString(level: LogLevel): string {
       return chalk.yellow("WARN");
     case LogLevel.ERROR:
       return chalk.red("ERROR");
-    case LogLevel.DEBUG:
-      return chalk.gray("DEBUG");
     default:
       return chalk.bgRed("???");
   }
@@ -26,7 +24,7 @@ export function formatMessage(obj: FormatObject, loggerName?: string): string {
   const levelString = getLevelString(obj.level);
 
   const nameSection = loggerName
-    ? chalk.yellow(` (${loggerName}${obj.level === LogLevel.DEBUG ? "/DEBUG" : ""})`)
+    ? chalk.yellow(` (${loggerName})`)
     : "";
 
   const timestamp = `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}]`;

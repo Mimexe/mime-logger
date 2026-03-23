@@ -61,7 +61,7 @@ describe("MimeLogger", () => {
   });
 
   test("child logger creates namespaced logger", () => {
-    const parent = new MimeLogger("parent", { debug: true });
+    const parent = new MimeLogger("parent");
     const child = parent.child("child");
     
     expect(child.name).toBe("parent/child");
@@ -96,7 +96,6 @@ describe("MimeLogger", () => {
     expect(LogLevel.INFO).toBe(LogLevel.INFO);
     expect(LogLevel.WARN).toBe(LogLevel.WARN);
     expect(LogLevel.ERROR).toBe(LogLevel.ERROR);
-    expect(LogLevel.DEBUG).toBe(LogLevel.DEBUG);
   });
 
   test("default import works", () => {

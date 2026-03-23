@@ -1,8 +1,7 @@
 export enum LogLevel {
   INFO = "info",
   WARN = "warn",
-  ERROR = "error",
-  DEBUG = "debug",
+  ERROR = "error"
 }
 
 export interface FormatObject {
@@ -12,11 +11,3 @@ export interface FormatObject {
   level: LogLevel;
   args: any[];
 }
-
-export interface MimeLoggerOptions {
-  debug?: boolean;
-}
-
-export const defaultOptions: MimeLoggerOptions = {
-  debug: false,
-};

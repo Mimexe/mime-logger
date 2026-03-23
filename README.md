@@ -9,8 +9,6 @@ A simple logger for Mime, used by all his projects.
 
 ## Installation
 
-You need ES6 support to use this package.
-
 Install mime-logger with your package manager of your choice.
 
 ```bash
