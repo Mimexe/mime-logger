@@ -31,9 +31,15 @@ Online documentation can be found [here](https://docs.mimedev.fr/docs/mime-logge
 
 ## Simple usage
 
-```javascript
-import Logger from "mime-logger";
+```typescript
+import Logger from "mime-logger"; // For ESM
 const logger = new Logger();
+logger.info("Hello, world!");
+```
+
+```javascript
+const { MimeLogger } = require("mime-logger"); // For CommonJS
+const logger = new MimeLogger();
 logger.info("Hello, world!");
 ```
 

@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ES6",
+    "module": "nodenext",
+    "target": "es2015",
     "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "declaration": true
+    "declaration": true,
+    "types": ["node"]
   },
-  "include": ["lib/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }
