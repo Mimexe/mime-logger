@@ -1,4 +1,4 @@
-import chalk from "chalk";
+import { yellow, cyan } from "ansis";
 import { LogLevel } from "./types.js";
 import { formatMessage, getLevelString } from "./formatter.js";
 
@@ -70,7 +70,7 @@ export class MimeLogger {
     const levelString = getLevelString(level);
 
     const nameSection = this.name
-      ? chalk.yellow(` (${this.name})`)
+      ? yellow(` (${this.name})`)
       : "";
 
     const start = `[${now.toLocaleTimeString()}.${now.getMilliseconds()}] ${levelString}${nameSection}: `;
@@ -84,9 +84,9 @@ export class MimeLogger {
     const parts = message.split("%p");
     let i = 0;
     for (const part of parts) {
-      process.stdout.write(chalk.cyan(part));
+      process.stdout.write(cyan(part));
       if (i < promises.length) {
-        process.stdout.write(chalk.cyan(await promises[i]));
+        process.stdout.write(cyan(await promises[i]));
       }
       i++;
     }

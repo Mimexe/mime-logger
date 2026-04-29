@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach, spyOn } from "bun:test";
+import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
 import { MimeLogger, LogLevel } from "../src/index.js";
 import Logger from "../src/index.js";
 
@@ -8,7 +8,7 @@ describe("MimeLogger", () => {
 
   beforeEach(() => {
     capturedLogs = [];
-    consoleLogSpy = spyOn(console, "log").mockImplementation((...args: any[]) => {
+    consoleLogSpy = vi.spyOn(console, "log").mockImplementation((...args: any[]) => {
       capturedLogs.push(args);
     });
   });
