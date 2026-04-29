@@ -1,16 +1,18 @@
-import chalk from "chalk";
+import { green, yellow, red, bgRed, cyan } from "ansis";
 import { LogLevel, FormatObject } from "./types.js";
+
+const messageColorMap = { yellow, red, cyan } as const;
 
 export function getLevelString(level: LogLevel): string {
   switch (level) {
     case LogLevel.INFO:
-      return chalk.green("INFO");
+      return green("INFO");
     case LogLevel.WARN:
-      return chalk.yellow("WARN");
+      return yellow("WARN");
     case LogLevel.ERROR:
-      return chalk.red("ERROR");
+      return red("ERROR");
     default:
-      return chalk.bgRed("???");
+      return bgRed("???");
   }
 }
 
@@ -24,11 +26,11 @@ export function formatMessage(obj: FormatObject, loggerName?: string): string {
   const levelString = getLevelString(obj.level);
 
   const nameSection = loggerName
-    ? chalk.yellow(` (${loggerName})`)
+    ? yellow(` (${loggerName})`)
     : "";
 
   const timestamp = `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}]`;
-  const coloredMessage = chalk[getMessageColor(obj.level)](obj.message);
+  const coloredMessage = messageColorMap[getMessageColor(obj.level)](obj.message);
 
   let message = `${timestamp} ${levelString}${nameSection}: ${coloredMessage}`;
 
