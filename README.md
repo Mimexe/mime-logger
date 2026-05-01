@@ -64,6 +64,7 @@ pnpm test          # run tests
 3. Push tags: `git push && git push --tags`
 
 **Pre-publish checklist:**
+
 - [ ] Tests pass (`pnpm test`)
 - [ ] Build succeeds (`pnpm run build`)
 - [ ] CI passing

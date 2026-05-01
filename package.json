@@ -7,8 +7,14 @@
   "types": "dist/index.d.mts",
   "exports": {
     ".": {
-      "import": { "types": "./dist/index.d.mts", "default": "./dist/index.mjs" },
-      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "scripts": {
@@ -42,9 +48,6 @@
     "ansis": "^4.2.0"
   },
   "files": [
-    "dist/index.mjs",
-    "dist/index.cjs",
-    "dist/index.d.mts",
-    "dist/index.d.cts"
+    "dist/"
   ]
 }

@@ -6,6 +6,7 @@ export default defineConfig({
   dts: true,
   outDir: "dist",
   clean: true,
+  minify: true,
   outputOptions: {
     exports: "named",
   },

@@ -8,17 +8,13 @@ async function fetchUser(id: number): Promise<string> {
 }
 
 async function main() {
-  await logger.promisesWrite(
-    "Fetched user: %p",
-    LogLevel.INFO,
-    fetchUser(42)
-  );
+  await logger.promisesWrite("Fetched user: %p", LogLevel.INFO, fetchUser(42));
 
   await logger.promisesWrite(
     "User %p and %p loaded",
     LogLevel.INFO,
     fetchUser(1),
-    fetchUser(2)
+    fetchUser(2),
   );
 }
 

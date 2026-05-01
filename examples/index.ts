@@ -6,6 +6,9 @@ async function main() {
   console.log("Child loggers:");
   await import("./child-loggers");
 
+  console.log("Custom formats:");
+  await import("./formats");
+
   console.log("Promises:");
   await import("./promises");
 }

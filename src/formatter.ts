@@ -1,7 +1,8 @@
 import { green, yellow, red, bgRed, cyan } from "ansis";
-import { LogLevel, FormatObject } from "./types.js";
+import { colors } from "./colors.js";
+import { LogLevel, FormatObject, FormatFn } from "./types.js";
 
-const messageColorMap = { yellow, red, cyan } as const;
+export const messageColorMap = { yellow, red, cyan } as const;
 
 export function getLevelString(level: LogLevel): string {
   switch (level) {
@@ -22,22 +23,70 @@ export function getMessageColor(level: LogLevel): "yellow" | "red" | "cyan" {
   return "cyan";
 }
 
-export function formatMessage(obj: FormatObject, loggerName?: string): string {
-  const levelString = getLevelString(obj.level);
+function parseStackLine(line: string) {
+  const match = line.match(/at (?:(.+?) \()?(?:.+[/\\])?(.+?):(\d+):\d+\)?/);
+  if (!match) return null;
+  return { fn: match[1] ?? "", file: match[2] ?? "", line: match[3] ?? "" };
+}
 
-  const nameSection = loggerName
-    ? yellow(` (${loggerName})`)
-    : "";
+export function getCallerInfo() {
+  const stack = new Error().stack?.split("\n") ?? [];
+  const internal = /[/\\](formatter|logger)\.[cm]?[jt]s/;
+  const userFrames = stack
+    .slice(1)
+    .filter((l) => l.includes("    at ") && !internal.test(l));
+  const direct = parseStackLine(userFrames[0] ?? "");
+  const above = parseStackLine(userFrames[1] ?? "");
+  if (!direct) return { file: "", line: "", function: "", caller: "" };
+  return {
+    file: direct.file,
+    line: direct.line,
+    function: direct.fn,
+    caller: above?.fn ?? "",
+  };
+}
 
-  const timestamp = `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}]`;
-  const coloredMessage = messageColorMap[getMessageColor(obj.level)](obj.message);
-
-  let message = `${timestamp} ${levelString}${nameSection}: ${coloredMessage}`;
-
-  // Replace %s placeholders with arguments
-  for (const arg of obj.args) {
-    message = message.replace("%s", arg);
+export function formatMessage(
+  obj: FormatObject,
+  format?: string | FormatFn,
+): string {
+  if (typeof format === "function") {
+    return format(obj, colors);
   }
 
+  const timestamp = `[${obj.timestamp.toLocaleTimeString()}.${obj.timestamp.getMilliseconds()}]`;
+
+  if (typeof format === "string") {
+    const needsCaller = /\{(?:file|line|function|caller)\}/.test(format);
+    const ci = needsCaller ? getCallerInfo() : { file: "", line: "", function: "", caller: "" };
+    let result = format
+      .replaceAll("{time}", timestamp)
+      .replaceAll("{date}", obj.timestamp.toLocaleDateString())
+      .replaceAll("{time_ms}", obj.timestamp.getMilliseconds().toString())
+      .replaceAll("{iso}", obj.timestamp.toISOString())
+      .replaceAll("{level}", obj.level)
+      .replaceAll("{name}", obj.name ?? "")
+      .replaceAll("{message}", obj.message)
+      .replaceAll("{pid}", process.pid.toString())
+      .replaceAll("{env}", process.env.NODE_ENV || "production")
+      .replaceAll("{file}", ci.file)
+      .replaceAll("{line}", ci.line)
+      .replaceAll("{function}", ci.function)
+      .replaceAll("{caller}", ci.caller);
+    for (const arg of obj.args) {
+      result = result.replace("%s", String(arg));
+    }
+    return result;
+  }
+
+  const levelString = getLevelString(obj.level);
+  const nameSection = obj.name ? yellow(` (${obj.name})`) : "";
+  const coloredMessage = messageColorMap[getMessageColor(obj.level)](
+    obj.message,
+  );
+  let message = `${timestamp} ${levelString}${nameSection}: ${coloredMessage}`;
+  for (const arg of obj.args) {
+    message = message.replace("%s", String(arg));
+  }
   return message;
 }

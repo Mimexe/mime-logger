@@ -10,7 +10,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "declaration": true,
-    "types": ["node"]
+    "types": ["node"],
+    "lib": ["ES2021.String"]
   },
   "include": ["src/**/*.ts"]
 }
