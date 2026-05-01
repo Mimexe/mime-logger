@@ -4,6 +4,7 @@ import { MimeLogger, Formats } from "../src/index.js";
 
 const mockWrite = vi.fn();
 vi.mock("fs", () => ({
+  existsSync: vi.fn().mockReturnValue(false),
   mkdirSync: vi.fn(),
   createWriteStream: vi.fn(() => ({ write: mockWrite, end: vi.fn() })),
 }));
