@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
-import { MimeLogger, Formats } from "../src/index.js";
+import { MimeLogger, Formats, getCallerInfo } from "../src/index.js";
 
 describe("Formats.pretty", () => {
   let logs: string[] = [];
@@ -98,6 +98,37 @@ describe("Formats.detailed", () => {
     new MimeLogger("db", { format: Formats.detailed }).error("msg");
     expect(logs[0]).toContain("(db)");
   });
+
+  test("contains caller location prefix [file:line]", () => {
+    new MimeLogger(undefined, { format: Formats.detailed }).info("msg");
+    expect(logs[0]).toMatch(/\[.+:\d+/);
+  });
+});
+
+describe("getCallerInfo", () => {
+  test("returns file and line for direct caller", () => {
+    const ci = getCallerInfo();
+    expect(ci.file).toBeTruthy();
+    expect(ci.line).toMatch(/^\d+$/);
+  });
+
+  test("skipFrames skips N user frames", () => {
+    const ci0 = getCallerInfo();
+    const ci1 = getCallerInfo({ skipFrames: 1 });
+    expect(ci0.file).toBeTruthy();
+    expect(ci1.line === "" || ci1.line !== ci0.line || ci1.file !== ci0.file).toBe(true);
+  });
+
+  test("additionalSkip filters matching frames", () => {
+    const ci = getCallerInfo({ additionalSkip: /.+/ });
+    expect(ci.file).toBe("");
+    expect(ci.line).toBe("");
+  });
+
+  test("returns empty strings when no user frames found", () => {
+    const ci = getCallerInfo({ additionalSkip: /.+/ });
+    expect(ci).toEqual({ file: "", line: "", function: "", caller: "" });
+  });
 });
 
 describe("Formats.json", () => {
@@ -180,7 +211,10 @@ describe("custom FormatFn with colors", () => {
   test("format fn receives correct FormatObject fields", () => {
     let captured: any;
     new MimeLogger("svc", {
-      format: (obj) => { captured = obj; return ""; },
+      format: (obj) => {
+        captured = obj;
+        return "";
+      },
     }).warn("test msg");
     expect(captured.level).toBe("warn");
     expect(captured.name).toBe("svc");

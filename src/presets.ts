@@ -1,5 +1,10 @@
 import { colors } from "./colors.js";
-import { getLevelString, getMessageColor, messageColorMap } from "./formatter.js";
+import {
+  getCallerInfo,
+  getLevelString,
+  getMessageColor,
+  messageColorMap,
+} from "./formatter.js";
 import type { FormatFn } from "./types.js";
 
 function applyArgs(str: string, args: any[]): string {
@@ -40,7 +45,12 @@ const detailed: FormatFn = (obj, c) => {
   const msg = messageColorMap[getMessageColor(obj.level)](
     applyArgs(obj.message, obj.args),
   );
-  return `${ts} ${level}${name}: ${msg}`;
+  const ci = getCallerInfo();
+  const loc = ci.function
+    ? `${ci.file}:${ci.line} ${ci.function}`
+    : `${ci.file}:${ci.line}`;
+  const call = c.dim(`[${loc}]`);
+  return `${call} ${ts} ${level}${name}: ${msg}`;
 };
 
 const json: FormatFn = (obj) =>

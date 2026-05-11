@@ -1,6 +1,10 @@
 import { green, yellow, red, bgRed, cyan } from "ansis";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 import { colors } from "./colors.js";
 import { LogLevel, FormatObject, FormatFn } from "./types.js";
+
+const _libDir = dirname(fileURLToPath(import.meta.url)).replace(/\\/g, "/");
 
 export const messageColorMap = { yellow, red, cyan } as const;
 
@@ -29,12 +33,22 @@ function parseStackLine(line: string) {
   return { fn: match[1] ?? "", file: match[2] ?? "", line: match[3] ?? "" };
 }
 
-export function getCallerInfo() {
-  const stack = new Error().stack?.split("\n") ?? [];
-  const internal = /[/\\](formatter|logger)\.[cm]?[jt]s/;
-  const userFrames = stack
-    .slice(1)
-    .filter((l) => l.includes("    at ") && !internal.test(l));
+export interface CallerInfoOptions {
+  skipFrames?: number;
+  additionalSkip?: RegExp;
+}
+
+export function getCallerInfo(options: CallerInfoOptions = {}) {
+  const obj: { stack?: string } = {};
+  Error.captureStackTrace(obj, getCallerInfo);
+  let userFrames = (obj.stack?.split("\n").slice(1) ?? []).filter((l) => {
+    if (!l.includes("    at ")) return false;
+    if (l.includes("    at node:")) return false;
+    if (l.replace(/\\/g, "/").includes(_libDir)) return false;
+    if (options.additionalSkip?.test(l)) return false;
+    return true;
+  });
+  if (options.skipFrames) userFrames = userFrames.slice(options.skipFrames);
   const direct = parseStackLine(userFrames[0] ?? "");
   const above = parseStackLine(userFrames[1] ?? "");
   if (!direct) return { file: "", line: "", function: "", caller: "" };
@@ -58,7 +72,9 @@ export function formatMessage(
 
   if (typeof format === "string") {
     const needsCaller = /\{(?:file|line|function|caller)\}/.test(format);
-    const ci = needsCaller ? getCallerInfo() : { file: "", line: "", function: "", caller: "" };
+    const ci = needsCaller
+      ? getCallerInfo()
+      : { file: "", line: "", function: "", caller: "" };
     let result = format
       .replaceAll("{time}", timestamp)
       .replaceAll("{date}", obj.timestamp.toLocaleDateString())

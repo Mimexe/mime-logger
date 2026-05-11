@@ -16,7 +16,13 @@ export class MimeLogger {
 
   log(level: LogLevel = LogLevel.INFO, message: string, args: any[]): void {
     if (!message) return;
-    const obj = { message, level, name: this.name, timestamp: new Date(), args };
+    const obj = {
+      message,
+      level,
+      name: this.name,
+      timestamp: new Date(),
+      args,
+    };
     this._write(formatMessage(obj, this.options.format), obj);
   }
 
@@ -40,7 +46,13 @@ export class MimeLogger {
   write(message: string, ...args: any[]): void {
     process.stdout.write(
       formatMessage(
-        { message, level: LogLevel.INFO, name: this.name, timestamp: new Date(), args },
+        {
+          message,
+          level: LogLevel.INFO,
+          name: this.name,
+          timestamp: new Date(),
+          args,
+        },
         this.options.format,
       ),
     );

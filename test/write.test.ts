@@ -8,9 +8,10 @@ describe("write()", () => {
 
   beforeEach(() => {
     output = [];
-    spy = vi
-      .spyOn(process.stdout, "write")
-      .mockImplementation((chunk: any) => { output.push(chunk.toString()); return true; });
+    spy = vi.spyOn(process.stdout, "write").mockImplementation((chunk: any) => {
+      output.push(chunk.toString());
+      return true;
+    });
   });
   afterEach(() => spy.mockRestore());
 
@@ -53,14 +54,19 @@ describe("promisesWrite()", () => {
 
   beforeEach(() => {
     output = [];
-    spy = vi
-      .spyOn(process.stdout, "write")
-      .mockImplementation((chunk: any) => { output.push(chunk.toString()); return true; });
+    spy = vi.spyOn(process.stdout, "write").mockImplementation((chunk: any) => {
+      output.push(chunk.toString());
+      return true;
+    });
   });
   afterEach(() => spy.mockRestore());
 
   test("single promise value written", async () => {
-    await new MimeLogger().promisesWrite("%p", LogLevel.INFO, Promise.resolve("result"));
+    await new MimeLogger().promisesWrite(
+      "%p",
+      LogLevel.INFO,
+      Promise.resolve("result"),
+    );
     expect(output.join("")).toContain("result");
   });
 
@@ -78,30 +84,51 @@ describe("promisesWrite()", () => {
   });
 
   test("includes level", async () => {
-    await new MimeLogger().promisesWrite("%p", LogLevel.WARN, Promise.resolve("v"));
+    await new MimeLogger().promisesWrite(
+      "%p",
+      LogLevel.WARN,
+      Promise.resolve("v"),
+    );
     expect(output.join("")).toContain("WARN");
   });
 
   test("includes name", async () => {
-    await new MimeLogger("tasks").promisesWrite("%p", LogLevel.INFO, Promise.resolve("v"));
+    await new MimeLogger("tasks").promisesWrite(
+      "%p",
+      LogLevel.INFO,
+      Promise.resolve("v"),
+    );
     expect(output.join("")).toContain("(tasks)");
   });
 
   test("ends with newline", async () => {
-    await new MimeLogger().promisesWrite("%p", LogLevel.INFO, Promise.resolve("v"));
+    await new MimeLogger().promisesWrite(
+      "%p",
+      LogLevel.INFO,
+      Promise.resolve("v"),
+    );
     expect(output[output.length - 1]).toBe("\n");
   });
 
   test("no %p → throws", async () => {
     await expect(
-      new MimeLogger().promisesWrite("no placeholder", LogLevel.INFO, Promise.resolve("v")),
+      new MimeLogger().promisesWrite(
+        "no placeholder",
+        LogLevel.INFO,
+        Promise.resolve("v"),
+      ),
     ).rejects.toThrow("No %p in message");
   });
 
   test("awaits slow promise before writing next segment", async () => {
     const slow = new Promise<string>((r) => setTimeout(() => r("slow"), 50));
     const fast = Promise.resolve("fast");
-    await new MimeLogger().promisesWrite("%p then %p", LogLevel.INFO, slow, fast);
+    await new MimeLogger().promisesWrite(
+      "%p then %p",
+      LogLevel.INFO,
+      slow,
+      fast,
+    );
     const combined = output.join("");
     expect(combined).toContain("slow");
     expect(combined.indexOf("slow")).toBeLessThan(combined.indexOf("fast"));

@@ -54,10 +54,7 @@ fileLogger.warn("Low memory");
 // ─── Output: console + file (fan-out) ────────────────────────────────────────
 const dualLogger = new MimeLogger("app", {
   format: Formats.pretty,
-  output: [
-    "console",
-    { type: "file", path: "logs/app-{date}.log" },
-  ],
+  output: ["console", { type: "file", path: "logs/app-{date}.log" }],
 });
 dualLogger.info("Goes to stdout AND file");
 

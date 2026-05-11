@@ -49,7 +49,9 @@ describe("output: custom fn", () => {
   test("custom fn receives FormatObject as 2nd arg", () => {
     let capturedObj: any;
     new MimeLogger("svc", {
-      output: (_msg, obj) => { capturedObj = obj; },
+      output: (_msg, obj) => {
+        capturedObj = obj;
+      },
     }).warn("test");
 
     expect(capturedObj.level).toBe("warn");
@@ -92,14 +94,11 @@ describe("output: fan-out array", () => {
   });
 
   test("three targets all called", () => {
-    const a: string[] = [], b: string[] = [];
+    const a: string[] = [],
+      b: string[] = [];
     new MimeLogger(undefined, {
       format: (obj) => obj.message,
-      output: [
-        (msg) => a.push(msg),
-        (msg) => b.push(msg),
-        "console",
-      ],
+      output: [(msg) => a.push(msg), (msg) => b.push(msg), "console"],
     }).info("msg");
 
     expect(a).toHaveLength(1);
@@ -119,10 +118,10 @@ describe("output: file", () => {
       output: { type: "file", path: "logs/test.log" },
     }).info("msg");
 
-    expect(createWriteStream).toHaveBeenCalledWith(
-      "logs/test.log",
-      { flags: "a", encoding: "utf8" },
-    );
+    expect(createWriteStream).toHaveBeenCalledWith("logs/test.log", {
+      flags: "a",
+      encoding: "utf8",
+    });
   });
 
   test("stream write called with message + newline", () => {
@@ -210,7 +209,9 @@ describe("output: file", () => {
       output: { type: "file", path: "b/{year}-{month}-{day}.log" },
     }).info("msg");
 
-    const paths = (createWriteStream as any).mock.calls.map((c: any[]) => c[0] as string);
+    const paths = (createWriteStream as any).mock.calls.map(
+      (c: any[]) => c[0] as string,
+    );
     const datePart = paths[0].replace("a/", "").replace(".log", "");
     const ymdPart = paths[1].replace("b/", "").replace(".log", "");
     expect(datePart).toBe(ymdPart);
@@ -221,7 +222,10 @@ describe("output: file", () => {
       output: { type: "file", path: "logs/app.log" },
     }).info("msg");
 
-    expect(createWriteStream).toHaveBeenCalledWith("logs/app.log", expect.any(Object));
+    expect(createWriteStream).toHaveBeenCalledWith(
+      "logs/app.log",
+      expect.any(Object),
+    );
   });
 });
 
