@@ -1,6 +1,6 @@
 {
   "name": "mime-logger",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A simple logger for Node.js",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsdown",
     "test": "vitest run",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm run build && pnpm run test"
   },
   "bugs": {
     "url": "https://github.com/Mimexe/mime-logger/issues",
@@ -39,13 +39,13 @@
   "author": "Mime <mime@mimedev.fr> (https://mimedev.fr)",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^25.6.2",
+    "@types/node": "^26.6.3",
     "tsdown": "latest",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.6"
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
   },
   "dependencies": {
-    "ansis": "^4.3.0"
+    "ansis": "^4.4.0"
   },
   "files": [
     "dist/"
