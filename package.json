@@ -39,13 +39,13 @@
   "author": "Mime <mime@mimedev.fr> (https://mimedev.fr)",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^26.6.3",
+    "@types/node": "^26.6.6",
     "tsdown": "latest",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.3"
+    "vitest": "^5.1.0"
   },
   "dependencies": {
-    "ansis": "^4.4.0"
+    "ansis": "^4.5.0"
   },
   "files": [
     "dist/"
