@@ -23,7 +23,7 @@ jobs:
       - run: pnpm run build
       - run: pnpm test
       - run: pnpm pack --pack-destination dist
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: mime-logger-tarball
           path: dist/mime-logger-*.tgz
@@ -38,7 +38,7 @@ jobs:
         node: [16, 18, 20, 22, 24, 26]
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v8
         with:
           name: mime-logger-tarball
           path: dist
