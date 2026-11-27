@@ -45,6 +45,6 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install --no-save ./dist/mime-logger-*.tgz
-      - run: node test/smoke/smoke-test.mjs
-      - run: node test/smoke/smoke-test.cjs
+      - run: mkdir -p smoke-tmp && cp test/smoke/smoke-test.* dist/mime-logger-*.tgz smoke-tmp/ && cd smoke-tmp && npm init -y >/dev/null && npm install --no-save ./mime-logger-*.tgz
+      - run: node smoke-tmp/smoke-test.mjs
+      - run: node smoke-tmp/smoke-test.cjs
