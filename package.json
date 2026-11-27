@@ -36,13 +36,16 @@
     "logger"
   ],
   "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
   "author": "Mime <mime@mimedev.fr> (https://mimedev.fr)",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^26.6.6",
     "tsdown": "^0.23.7",
     "typescript": "^7.0.2",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.1"
   },
   "dependencies": {
     "ansis": "^4.5.0"
